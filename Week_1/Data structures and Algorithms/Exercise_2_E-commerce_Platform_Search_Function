@@ -1,1 +1,136 @@
+// =======================
+// Product.java
+// =======================
 
+public class Product {
+
+    int productId;
+    String productName;
+    String category;
+
+    public Product(int productId, String productName, String category) {
+        this.productId = productId;
+        this.productName = productName;
+        this.category = category;
+    }
+}
+
+
+// =======================
+// ProductData.java
+// =======================
+
+public class ProductData {
+
+    public static Product[] getProducts() {
+
+        Product[] products = new Product[5];
+
+        products[0] = new Product(101, "Laptop", "Electronics");
+        products[1] = new Product(102, "Mouse", "Electronics");
+        products[2] = new Product(103, "Keyboard", "Electronics");
+        products[3] = new Product(104, "Phone", "Mobiles");
+        products[4] = new Product(105, "Watch", "Accessories");
+
+        return products;
+    }
+}
+
+
+// =======================
+// LinearSearch.java
+// =======================
+
+public class LinearSearch {
+
+    public static int search(Product[] products, int searchId) {
+
+        for (int i = 0; i < products.length; i++) {
+
+            if (products[i].productId == searchId) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+}
+
+
+// =======================
+// BinarySearch.java
+// =======================
+
+public class BinarySearch {
+
+    public static int search(Product[] products, int searchId) {
+
+        int low = 0;
+        int high = products.length - 1;
+
+        while (low <= high) {
+
+            int mid = (low + high) / 2;
+
+            if (products[mid].productId == searchId) {
+                return mid;
+            }
+
+            if (products[mid].productId < searchId) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        return -1;
+    }
+}
+
+
+// =======================
+// Main.java
+// =======================
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        Product[] products = ProductData.getProducts();
+
+        System.out.print("Enter Product ID to Search: ");
+        int searchId = sc.nextInt();
+
+        int linearResult = LinearSearch.search(products, searchId);
+
+        System.out.println("\n----- Linear Search -----");
+
+        if (linearResult != -1) {
+            System.out.println("Product Found");
+            System.out.println("Product ID : " + products[linearResult].productId);
+            System.out.println("Product Name : " + products[linearResult].productName);
+            System.out.println("Category : " + products[linearResult].category);
+        } else {
+            System.out.println("Product Not Found");
+        }
+
+        int binaryResult = BinarySearch.search(products, searchId);
+
+        System.out.println("\n----- Binary Search -----");
+
+        if (binaryResult != -1) {
+            System.out.println("Product Found");
+            System.out.println("Product ID : " + products[binaryResult].productId);
+            System.out.println("Product Name : " + products[binaryResult].productName);
+            System.out.println("Category : " + products[binaryResult].category);
+        } else {
+            System.out.println("Product Not Found");
+        }
+
+        sc.close();
+    }
+}
