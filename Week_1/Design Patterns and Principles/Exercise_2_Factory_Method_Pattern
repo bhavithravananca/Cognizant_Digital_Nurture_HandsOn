@@ -1,1 +1,89 @@
+interface Document {
+    void open();
+}
 
+// Word Document
+class WordDocument implements Document {
+    @Override
+    public void open() {
+        System.out.println("Word Document opened successfully.");
+    }
+}
+
+// PDF Document
+class PdfDocument implements Document {
+    @Override
+    public void open() {
+        System.out.println("PDF Document opened successfully.");
+    }
+}
+
+// Excel Document
+class ExcelDocument implements Document {
+    @Override
+    public void open() {
+        System.out.println("Excel Document opened successfully.");
+    }
+}
+
+// Abstract Factory
+abstract class DocumentFactory {
+    public abstract Document createDocument();
+}
+
+// Word Factory
+class WordDocumentFactory extends DocumentFactory {
+    @Override
+    public Document createDocument() {
+        System.out.println("Creating Word Document...");
+        return new WordDocument();
+    }
+}
+
+// PDF Factory
+class PdfDocumentFactory extends DocumentFactory {
+    @Override
+    public Document createDocument() {
+        System.out.println("Creating PDF Document...");
+        return new PdfDocument();
+    }
+}
+
+// Excel Factory
+class ExcelDocumentFactory extends DocumentFactory {
+    @Override
+    public Document createDocument() {
+        System.out.println("Creating Excel Document...");
+        return new ExcelDocument();
+    }
+}
+
+// Main Class
+public class FactoryTest {
+
+    public static void main(String[] args) {
+
+        System.out.println("===== Factory Method Pattern Demo =====\n");
+
+        // Word Document
+        DocumentFactory wordFactory = new WordDocumentFactory();
+        Document word = wordFactory.createDocument();
+        word.open();
+
+        System.out.println();
+
+        // PDF Document
+        DocumentFactory pdfFactory = new PdfDocumentFactory();
+        Document pdf = pdfFactory.createDocument();
+        pdf.open();
+
+        System.out.println();
+
+        // Excel Document
+        DocumentFactory excelFactory = new ExcelDocumentFactory();
+        Document excel = excelFactory.createDocument();
+        excel.open();
+
+        System.out.println("\nAll documents created successfully.");
+    }
+}
