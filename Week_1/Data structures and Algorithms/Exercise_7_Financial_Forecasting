@@ -1,0 +1,56 @@
+// =======================
+// FinancialData.java
+// =======================
+
+public class FinancialData {
+
+    double presentValue;
+    double growthRate;
+    int years;
+
+    public FinancialData(double presentValue, double growthRate, int years) {
+        this.presentValue = presentValue;
+        this.growthRate = growthRate;
+        this.years = years;
+    }
+}
+
+
+// =======================
+// Main.java
+// =======================
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("===== Financial Forecasting =====");
+
+        System.out.print("Enter Present Value (₹): ");
+        double presentValue = sc.nextDouble();
+
+        System.out.print("Enter Annual Growth Rate (%): ");
+        double growthRate = sc.nextDouble() / 100;
+
+        System.out.print("Enter Number of Years: ");
+        int years = sc.nextInt();
+
+        FinancialData data = new FinancialData(presentValue, growthRate, years);
+
+        FinancialForecast forecast = new FinancialForecast();
+
+        double futureValue = forecast.calculateFutureValue(data);
+
+        System.out.println("\n----- Forecast Result -----");
+        System.out.println("Present Value : ₹" + data.presentValue);
+        System.out.println("Growth Rate   : " + (data.growthRate * 100) + "%");
+        System.out.println("Years         : " + data.years);
+        System.out.printf("Future Value  : ₹%.2f%n", futureValue);
+
+        sc.close();
+    }
+}
