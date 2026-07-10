@@ -1,0 +1,184 @@
+-- ==========================================================
+-- Exercise 3 : Stored Procedures
+-- Database : BankDB
+-- MySQL Workbench Compatible
+-- ==========================================================
+
+DROP DATABASE IF EXISTS BankDB;
+CREATE DATABASE BankDB;
+USE BankDB;
+
+-- ==========================================================
+-- Create Accounts Table
+-- ==========================================================
+
+CREATE TABLE Accounts (
+    AccountID INT PRIMARY KEY,
+    CustomerName VARCHAR(100),
+    AccountType VARCHAR(20),
+    Balance DECIMAL(10,2)
+);
+
+-- ==========================================================
+-- Create Employees Table
+-- ==========================================================
+
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    EmployeeName VARCHAR(100),
+    Department VARCHAR(50),
+    Salary DECIMAL(10,2)
+);
+
+-- ==========================================================
+-- Insert Sample Data
+-- ==========================================================
+
+INSERT INTO Accounts VALUES
+(101,'Ravi','Savings',25000),
+(102,'Priya','Savings',18000),
+(103,'Kumar','Current',30000),
+(104,'John','Savings',15000);
+
+INSERT INTO Employees VALUES
+(1,'Arun','HR',40000),
+(2,'Divya','IT',50000),
+(3,'Rahul','IT',55000),
+(4,'Sneha','Finance',60000);
+
+-- ==========================================================
+-- Display Initial Data
+-- ==========================================================
+
+SELECT * FROM Accounts;
+SELECT * FROM Employees;
+
+-- ==========================================================
+-- Scenario 1
+-- Process Monthly Interest (1%)
+-- ==========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE ProcessMonthlyInterest()
+BEGIN
+
+    UPDATE Accounts
+    SET Balance = Balance + (Balance * 0.01)
+    WHERE AccountType = 'Savings';
+
+END$$
+
+DELIMITER ;
+
+CALL ProcessMonthlyInterest();
+
+SELECT * FROM Accounts;
+
+-- ==========================================================
+-- Scenario 2
+-- Update Employee Bonus
+-- Bonus Percentage is passed as parameter
+-- ==========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE UpdateEmployeeBonus
+(
+    IN dept VARCHAR(50),
+    IN bonusPercent DECIMAL(5,2)
+)
+
+BEGIN
+
+    UPDATE Employees
+    SET Salary = Salary + (Salary * bonusPercent / 100)
+    WHERE Department = dept;
+
+END$$
+
+DELIMITER ;
+
+-- Example:
+CALL UpdateEmployeeBonus('IT',10);
+
+SELECT * FROM Employees;
+
+-- ==========================================================
+-- Scenario 3
+-- Transfer Funds
+-- ==========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE TransferFunds
+(
+    IN FromAccount INT,
+    IN ToAccount INT,
+    IN Amount DECIMAL(10,2)
+)
+
+BEGIN
+
+    DECLARE SourceBalance DECIMAL(10,2);
+
+    SELECT Balance
+    INTO SourceBalance
+    FROM Accounts
+    WHERE AccountID = FromAccount;
+
+    IF SourceBalance >= Amount THEN
+
+        UPDATE Accounts
+        SET Balance = Balance - Amount
+        WHERE AccountID = FromAccount;
+
+        UPDATE Accounts
+        SET Balance = Balance + Amount
+        WHERE AccountID = ToAccount;
+
+        SELECT 'Transfer Successful' AS Message;
+
+    ELSE
+
+        SELECT 'Insufficient Balance' AS Message;
+
+    END IF;
+
+END$$
+
+DELIMITER ;
+
+-- Example:
+CALL TransferFunds(101,102,5000);
+
+SELECT * FROM Accounts;
+
+-- ==========================================================
+-- Final Verification
+-- ==========================================================
+
+SELECT * FROM Accounts;
+SELECT * FROM Employees;
+-- ==========================================================
+-- Exercise 1 Execution
+-- ==========================================================
+
+CALL ProcessMonthlyInterest();
+SELECT * FROM Accounts;
+
+-- ==========================================================
+-- Exercise 2 Execution
+-- ==========================================================
+
+CALL UpdateEmployeeBonus('IT',10);
+SELECT * FROM Employees;
+
+-- ==========================================================
+-- Exercise 3 Execution
+-- ==========================================================
+
+CALL TransferFunds(101,102,5000);
+SELECT * FROM Accounts;
+
+
