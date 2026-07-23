@@ -1,1 +1,52 @@
+// Calculator.java
 
+public class Calculator {
+
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+}
+
+// CalculatorTest.java
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class CalculatorTest {
+
+    private Calculator calculator;
+
+    // Setup Method
+    @BeforeEach
+    public void setUp() {
+        calculator = new Calculator();
+        System.out.println("Setup Method Executed");
+    }
+
+    @Test
+    public void testAddition() {
+
+        // Arrange
+        int num1 = 20;
+        int num2 = 30;
+
+        // Act
+        int result = calculator.add(num1, num2);
+
+        // Assert
+        assertEquals(50, result);
+
+        System.out.println("Test Passed");
+    }
+
+    // Teardown Method
+    @AfterEach
+    public void tearDown() {
+        calculator = null;
+        System.out.println("Teardown Method Executed");
+    }
+}
