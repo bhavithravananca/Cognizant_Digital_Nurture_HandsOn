@@ -1,1 +1,65 @@
+//Assertions
 
+
+public class Assertions {
+
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public boolean isGreater(int a, int b) {
+        return a > b;
+    }
+
+    public Object getNullObject() {
+        return null;
+    }
+
+    public Object getObject() {
+        return new Object();
+    }
+}
+
+
+
+
+
+//AssertionsTest.java
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class AssertionsTest {
+
+    @Test
+    public void testAssertionsPass() {
+
+        // Assert Equals
+        assertEquals(5, 2 + 3);
+
+        // Assert True
+        assertTrue(5 > 3);
+
+        // Assert False
+        assertFalse(5 < 3);
+
+        // Assert Null
+        String str = null;
+        assertNull(str);
+
+        // Assert Not Null
+        String name = "JUnit";
+        assertNotNull(name);
+
+        System.out.println("All assertions passed.");
+    }
+
+    @Test
+    public void testAssertionsFail() {
+
+        assertEquals(10, 5 + 5);
+
+        System.out.println("Second test passed.");
+    }
+}
