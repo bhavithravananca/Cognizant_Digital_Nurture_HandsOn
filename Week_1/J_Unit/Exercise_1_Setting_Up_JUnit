@@ -1,1 +1,36 @@
+// Calculator.java
 
+public class Calculator {
+
+    public int add(int a, int b) {
+        return a + b;
+    }
+}
+
+// Calculator_test.java
+
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
+public class Calculator_test {
+
+    // Test Case 1 - Passed
+    @Test
+    public void testAddPass() {
+        Calculator calculator = new Calculator();
+
+        int result = calculator.add(5, 3);
+
+        assertEquals(8, result);
+    }
+
+    // Test Case 2 - Failed (Intentional)
+    @Test
+    public void testAddFail() {
+        Calculator calculator = new Calculator();
+
+        int result = calculator.add(6, 4);
+
+        assertEquals(9, result);   // Expected 9, Actual 10
+    }
+}
