@@ -1,1 +1,234 @@
+<!-- ==========================================================
+Spring Data JPA - Quick Example
+========================================================== -->
 
+
+<!-- ==========================
+Project Name
+==========================
+
+orm-learn
+
+-->
+
+
+
+<!-- ==========================
+pom.xml
+========================== -->
+
+<dependencies>
+
+    <!-- Spring Boot DevTools -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-devtools</artifactId>
+    </dependency>
+
+    <!-- Spring Data JPA -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+
+    <!-- MySQL Driver -->
+    <dependency>
+        <groupId>com.mysql</groupId>
+        <artifactId>mysql-connector-j</artifactId>
+        <scope>runtime</scope>
+    </dependency>
+
+    <!-- Spring Boot Starter -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+
+    <!-- Testing -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+
+</dependencies>
+
+
+
+<!-- ==========================
+application.properties
+========================== -->
+
+# Spring Framework Logging
+logging.level.org.springframework=info
+logging.level.com.cognizant=debug
+
+# Hibernate SQL Logging
+logging.level.org.hibernate.SQL=trace
+logging.level.org.hibernate.orm.jdbc.bind=trace
+
+# Console Log Pattern
+logging.pattern.console=%d{dd-MM-yy} %d{HH:mm:ss.SSS} %-20.20thread %5p %-25.25logger{25} %25M %4L %m%n
+
+# Database Configuration
+spring.datasource.url=jdbc:mysql://localhost:3306/ormlearn
+spring.datasource.username=root
+spring.datasource.password=root
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# Hibernate Configuration
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+
+
+
+<!-- ==========================
+Database
+========================== -->
+
+CREATE DATABASE ormlearn;
+
+USE ormlearn;
+
+CREATE TABLE country(
+    code VARCHAR(2) PRIMARY KEY,
+    name VARCHAR(50)
+);
+
+INSERT INTO country VALUES ('IN','India');
+INSERT INTO country VALUES ('US','United States of America');
+
+
+
+<!-- ==========================
+Country.java
+========================== -->
+
+@Entity
+@Table(name="country")
+public class Country {
+
+    @Id
+    @Column(name="code")
+    private String code;
+
+    @Column(name="name")
+    private String name;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Country{code='" + code + "', name='" + name + "'}";
+    }
+}
+
+
+
+<!-- ==========================
+CountryRepository.java
+========================== -->
+
+@Repository
+public interface CountryRepository
+        extends JpaRepository<Country, String> {
+
+}
+
+
+
+<!-- ==========================
+CountryService.java
+========================== -->
+
+@Service
+public class CountryService {
+
+    @Autowired
+    private CountryRepository countryRepository;
+
+    @Transactional
+    public List<Country> getAllCountries() {
+        return countryRepository.findAll();
+    }
+}
+
+
+
+<!-- ==========================
+OrmLearnApplication.java
+========================== -->
+
+@SpringBootApplication
+public class OrmLearnApplication {
+
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(OrmLearnApplication.class);
+
+    private static CountryService countryService;
+
+    public static void main(String[] args) {
+
+        ApplicationContext context =
+                SpringApplication.run(OrmLearnApplication.class, args);
+
+        countryService = context.getBean(CountryService.class);
+
+        LOGGER.info("Inside main");
+
+        testGetAllCountries();
+    }
+
+    private static void testGetAllCountries() {
+
+        LOGGER.info("Start");
+
+        List<Country> countries =
+                countryService.getAllCountries();
+
+        LOGGER.info("Countries : {}", countries);
+
+        LOGGER.info("End");
+    }
+}
+
+
+
+<!-- ==========================
+Output
+========================== -->
+
+Inside main
+
+Start
+
+Hibernate:
+select
+    c1_0.code,
+    c1_0.name
+from
+    country c1_0
+
+Countries :
+[
+Country{code='IN', name='India'},
+Country{code='US', name='United States of America'}
+]
+
+End
+
+Process finished with exit code 0
