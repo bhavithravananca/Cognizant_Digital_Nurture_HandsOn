@@ -1,0 +1,6 @@
+<h2>Student Profile</h2>
+<h3>Enrolled Courses</h3>
+<ul>
+  <li *ngFor="let c of enrolledCourses$ | async">{{ c.name }} ({{ c.code }})</li>
+</ul>
+<p *ngIf="(enrolledCourses$ | async)?.length === 0">You haven't enrolled in any courses yet.</p>

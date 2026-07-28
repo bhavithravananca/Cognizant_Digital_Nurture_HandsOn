@@ -1,0 +1,10 @@
+nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: #fff;
+  border-bottom: 1px solid #e2e6ec;
+}
+nav strong { margin-right: 1.5rem; color: #1a4fa0; }
+a.active { text-decoration: underline; }

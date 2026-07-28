@@ -1,0 +1,27 @@
+/* Global styles for the Student Course Portal */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f4f6f9;
+  color: #222;
+}
+nav a { margin-right: 1rem; color: #1a4fa0; text-decoration: none; font-weight: 600; }
+nav a:hover { text-decoration: underline; }
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  background: #1a4fa0;
+  color: #fff;
+}
+button:disabled { background: #aaa; cursor: not-allowed; }
+
+/* Angular form-state classes (Hands-On 4) */
+.ng-invalid.ng-touched { border-color: #d64545; }
+.ng-valid.ng-touched { border-color: #2e9e5b; }
+
+.card--enrolled { border: 2px solid #2e9e5b; }
+.card--full { opacity: 0.8; }
+.expanded { min-height: 220px; }

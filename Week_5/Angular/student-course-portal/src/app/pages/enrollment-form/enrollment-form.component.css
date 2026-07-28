@@ -1,0 +1,5 @@
+.field { margin-bottom: 1rem; display: flex; flex-direction: column; max-width: 320px; }
+.field label { font-weight: 600; margin-bottom: 0.25rem; }
+input, select { padding: 0.4rem; }
+.error { color: #a3262b; font-size: 0.85rem; }
+.success { color: #1e7e3a; margin-top: 1rem; }

@@ -1,0 +1,7 @@
+import { HttpInterceptorFn } from '@angular/common/http';
+
+// HANDS-ON 8, Task 3: attaches a mock bearer token to every outgoing request
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const cloned = req.clone({ setHeaders: { Authorization: 'Bearer mock-token-12345' } });
+  return next(cloned);
+};

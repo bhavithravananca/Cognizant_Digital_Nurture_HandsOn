@@ -1,0 +1,13 @@
+.card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.badge { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 12px; font-size: 0.8rem; }
+.badge--passed { background: #e3f7ea; color: #1e7e3a; }
+.badge--failed { background: #fbe4e4; color: #a3262b; }
+.badge--pending { background: #eee; color: #666; }
+.actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+.details { margin-top: 0.5rem; color: #555; }
